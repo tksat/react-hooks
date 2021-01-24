@@ -1,8 +1,6 @@
-# Reactの学習
+# Reactの学習 【useStateを複数管理】
 
-## useStateを複数管理
-
-### 基本の記述
+## 基本の記述
 
 ```javascript:App.js
 
@@ -26,8 +24,8 @@ function App() {
 
 ```
 
-### 初期のstateがPropsで渡される場合
-** こちらの記述の方がわかりやすいので推奨 **
+## 初期のstateがPropsで渡される場合
+※ こちらの記述の方がわかりやすいので推奨
 
 ```javascript:App.js
 
