@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const App = props => {
 
@@ -8,6 +8,10 @@ const App = props => {
   const reset = () => setState(props)
 
   const changeInput = e => setState({ ...state, name: e.target.value })
+
+  useEffect(() => {
+    console.log("useEffectを実行しました")
+  })
 
   return (
     <>
