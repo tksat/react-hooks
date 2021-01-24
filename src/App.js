@@ -2,22 +2,19 @@ import { useState } from "react"
 
 const App = props => {
 
-  const [name, setName] = useState(props.name)
-  const [price, setPrice] = useState(props.price)
+  const [state, setState] = useState(props)
+  const { name, price } = state
 
-  const reset = () => {
-    setName(props.name)
-    setPrice(props.price)
-  }
+  const reset = () => setState(props)
 
-  const changeInput = e => setName(e.target.value)
+  const changeInput = e => setState({ ...state, name: e.target.value })
 
   return (
     <>
       <h1>複数のstate管理方法</h1>
-      <p>{name}は{price}です</p>
-      <button onClick={() => setPrice(price + 10)}>+10</button>
-      <button onClick={() => setPrice(price - 10)}>+10</button>
+      <p>{state.name}は{state.price}です</p>
+      <button onClick={() => setState({ ...state, price: price + 10 })}>+10</button>
+      <button onClick={() => setState({ ...state, price: price - 10 })}>+10</button>
       <input value={name} onChange={changeInput} />
       <button onClick={reset}>reset</button>
     </>

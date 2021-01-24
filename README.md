@@ -1,78 +1,59 @@
-# Reactの学習 【useStateを複数管理】
+# Reactの学習 【stateをまとめて管理】
 
 ## 基本の記述
 
 ```javascript:App.js
-
-function App() {
-
-  const initialState = {
-    name: "りんご",
-    price: 1000
-  }
-
-  const [name, setName] = useState(initialState.name)
-  const [price, setPlise] = useState(initialState.price)
-
-  return (
-    <>
-      <h1>複数のstate管理方法</h1>
-      <p>{name}は{price}です</p>
-    </>
-  );
-}
-
-```
-
-## 初期のstateがPropsで渡される場合
-※ こちらの記述の方がわかりやすいので推奨
-
-```javascript:App.js
-
 const App = props => {
 
-  const [name, setName] = useState(props.name)
-  const [price, setPlise] = useState(props.price)
+  const [state, setState] = useState(props)
+
+  const reset = () => setState(props)
+
+  const changeInput = e => setState({ ...state, name: e.target.value })
 
   return (
     <>
       <h1>複数のstate管理方法</h1>
-      <p>{name}は{price}です</p>
+      <p>{state.name}は{state.price}です</p>
+      <button onClick={() => setState({ ...state, price: state.price + 10 })}>+10</button>
+      <button onClick={() => setState({ ...state, price: state.price - 10 })}>+10</button>
+      <input value={state.name} onChange={changeInput} />
+      <button onClick={reset}>reset</button>
     </>
   );
 }
 
 App.defaultProps = {
-  name: "りんご",
-  price: 1000
+  name: "商品名",
+  price: 0
 }
 
 export default App
 
 ```
 
-#### props管理で変更してみよう
+## 重複している名前をリファクタリングしよう
+重複しているname.stateとname.priceをすっきりさせる
+```javascript
+const { name, price } = state
+```
 
 ```javascript:App.js
-
 const App = props => {
 
-  const [name, setName] = useState(props.name)
-  const [price, setPrice] = useState(props.price)
+  const [state, setState] = useState(props)
+  const { name, price } = state
 
-  const reset = () => {
-    setName(props.name)
-    setPrice(props.price)
-  }
+  const reset = () => setState(props)
 
-  const changeInput = e => setName(e.target.value)
+  const changeInput = e => setState({ ...state, name: e.target.value })
 
   return (
     <>
       <h1>複数のstate管理方法</h1>
-      <p>{name}は{price}です</p>
-      <button onClick={() => setPrice(price + 10)}>+10</button>
-      <button onClick={() => setPrice(price - 10)}>+10</button>
+      <p>{state.name}は{state.price}です</p>
+      <button onClick={() => setState({ ...state, price: price + 10 })}>+10</button>
+      <button onClick={() => setState({ ...state, price: price - 10 })}>+10</button>
       <input value={name} onChange={changeInput} />
       <button onClick={reset}>reset</button>
     </>
