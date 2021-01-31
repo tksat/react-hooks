@@ -1,19 +1,32 @@
+import React, { useState, useReducer } from 'react';
 import styled from 'styled-components';
+import reducer from '../reducers'
 
 const TodoApp = () => {
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
+  const [state, dispatch] = useReducer(reducer, [])
+
+  const todoAdd = e => {
+    e.preventDefault()
+    dispatch({ type: 'CREATE_EVENT', payload: { title, body } })
+    setTitle("")
+    setBody("")
+  }
+
   return (
     <StyledDiv>
       <StyledH4>イベント作成フォーム</StyledH4>
       <form>
         <div>
-          <lavel>タイトル</lavel>
-          <StyledInputText />
+          <label htmlFor="title">タイトル</label>
+          <StyledInputText id="title" value={title} onChange={e => setTitle(e.target.value)} />
         </div>
         <div>
-          <lavel>本文</lavel>
-          <StyledTextArea />
+          <label htmlFor="body">本文</label>
+          <StyledTextArea id="body" value={body} onChange={e => setBody(e.target.value)} />
         </div>
-        <StyledButton value="イベントを作成" />
+        <StyledButton value="イベントを作成" onClick={todoAdd} />
         <StyledButton value="すべてのイベントを削除" delete />
       </form>
 
