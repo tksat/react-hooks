@@ -1,6 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import styled from 'styled-components';
 import reducer from '../reducers'
+import Events from './Events'
 
 const TodoApp = () => {
   const [title, setTitle] = useState('')
@@ -13,6 +14,27 @@ const TodoApp = () => {
     setTitle("")
     setBody("")
   }
+
+  const todoAllDelete = e => {
+    e.preventDefault()
+    dispatch({ type: 'ALL_DELETE_EVENT' })
+  }
+
+  // const displayEvents = state.map(event => {
+  //   const todoDelete = () => {
+  //     dispatch({ type: 'DELETE_EVENT', payload: { id: event.id } })
+  //   }
+
+  //   return (
+  //     <tr key={event.id}>
+  //       <td>{event.title}</td>
+  //       <td>0000/00/00</td>
+  //       <td>{event.body}</td>
+  //       <td><input type="button" onClick={todoDelete} value="削除" /></td>
+  //     </tr>
+  //   )
+  // }
+  // )
 
   return (
     <StyledDiv>
@@ -27,7 +49,7 @@ const TodoApp = () => {
           <StyledTextArea id="body" value={body} onChange={e => setBody(e.target.value)} />
         </div>
         <StyledButton value="イベントを作成" onClick={todoAdd} />
-        <StyledButton value="すべてのイベントを削除" delete />
+        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} />
       </form>
 
       <StyledH4>イベント一覧</StyledH4>
@@ -40,11 +62,7 @@ const TodoApp = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ここにタイトル入ります</td>
-            <td>0000/00/00</td>
-            <td>ここに内容のテキストが入りますここに内容のテキストが入ります</td>
-          </tr>
+          <Events events={state} dispatch={dispatch} />
         </tbody>
       </table>
 
