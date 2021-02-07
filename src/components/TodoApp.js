@@ -17,24 +17,9 @@ const TodoApp = () => {
 
   const todoAllDelete = e => {
     e.preventDefault()
-    dispatch({ type: 'ALL_DELETE_EVENT' })
+    const result = window.confirm("全てのデータを削除してもよろしいですか？")
+    if (result) dispatch({ type: 'ALL_DELETE_EVENT' })
   }
-
-  // const displayEvents = state.map(event => {
-  //   const todoDelete = () => {
-  //     dispatch({ type: 'DELETE_EVENT', payload: { id: event.id } })
-  //   }
-
-  //   return (
-  //     <tr key={event.id}>
-  //       <td>{event.title}</td>
-  //       <td>0000/00/00</td>
-  //       <td>{event.body}</td>
-  //       <td><input type="button" onClick={todoDelete} value="削除" /></td>
-  //     </tr>
-  //   )
-  // }
-  // )
 
   return (
     <StyledDiv>
@@ -48,8 +33,8 @@ const TodoApp = () => {
           <label htmlFor="body">本文</label>
           <StyledTextArea id="body" value={body} onChange={e => setBody(e.target.value)} />
         </div>
-        <StyledButton value="イベントを作成" onClick={todoAdd} />
-        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} />
+        <StyledButton value="イベントを作成" onClick={todoAdd} disabled={title === '' || body === ''} />
+        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} disabled={state.length == 0} />
       </form>
 
       <StyledH4>イベント一覧</StyledH4>

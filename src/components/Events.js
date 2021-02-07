@@ -4,7 +4,8 @@ const Events = ({ events, dispatch }) => {
 
   return events.map(event => {
     const todoDelete = () => {
-      dispatch({ type: 'DELETE_EVENT', payload: { id: event.id } })
+      const result = window.confirm("データを削除してもよろしいですか？")
+      if (result) dispatch({ type: 'DELETE_EVENT', payload: { id: event.id } })
     }
 
     return (
