@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { DELETE_EVENT } from '../actions'
+import AppContext from "../contexts/AppContext"
 
-const Events = ({ events, dispatch }) => {
+const Events = () => {
+  const { state, dispatch } = useContext(AppContext)
 
-  return events.map(event => {
+  return state.map(event => {
     const todoDelete = () => {
       const result = window.confirm("データを削除してもよろしいですか？")
       if (result) dispatch({ type: DELETE_EVENT, payload: { id: event.id } })

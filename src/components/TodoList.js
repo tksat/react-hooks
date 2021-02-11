@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Events from './Events'
 
-const TodoList = ({ state, dispatch }) => {
+const TodoList = () => {
   return (
     <>
       <StyledH4>イベント一覧</StyledH4>
@@ -15,7 +15,7 @@ const TodoList = ({ state, dispatch }) => {
           </tr>
         </thead>
         <tbody>
-          <Events events={state} dispatch={dispatch} />
+          <Events />
         </tbody>
       </table>
     </>

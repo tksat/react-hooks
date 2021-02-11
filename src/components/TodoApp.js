@@ -1,7 +1,8 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import styled from 'styled-components'
 import reducer from '../reducers'
 import TodoList from './TodoList'
+import AppContext from '../contexts/AppContext'
 
 import TodoForm from "./TodoForm"
 
@@ -9,10 +10,12 @@ const TodoApp = () => {
   const [state, dispatch] = useReducer(reducer, [])
 
   return (
-    <StyledDiv>
-      <TodoForm todoLength={state} dispatch={dispatch} />
-      <TodoList state={state} dispatch={dispatch} />
-    </StyledDiv>
+    <AppContext.Provider value={{ state, dispatch }}>
+      <StyledDiv>
+        <TodoForm />
+        <TodoList />
+      </StyledDiv>
+    </AppContext.Provider>
   )
 }
 

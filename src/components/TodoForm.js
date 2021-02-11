@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import AppContext from '../contexts/AppContext'
 import { CREATE_EVENT, ALL_DELETE_EVENT } from '../actions'
 import styled from 'styled-components'
 
-const TodoForm = ({ todoLength, dispatch }) => {
+const TodoForm = () => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
+  const { state, dispatch } = useContext(AppContext)
 
   const todoAdd = e => {
     e.preventDefault()
@@ -32,7 +34,7 @@ const TodoForm = ({ todoLength, dispatch }) => {
           <StyledTextArea id="body" value={body} onChange={e => setBody(e.target.value)} />
         </div>
         <StyledButton value="イベントを作成" onClick={todoAdd} disabled={title === '' || body === ''} />
-        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} disabled={todoLength.length === 0} />
+        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} disabled={state.length === 0} />
       </form>
     </>
   )

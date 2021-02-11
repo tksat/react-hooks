@@ -142,3 +142,75 @@ const TodoForm = ({ todoLength, dispatch }) => {
     if (result) dispatch({ type: ALL_DELETE_EVENT })
   }
 ```
+
+## PropsでデータのバケツリレーをContextで解消する
+
+### React Contextの導入
+
+### (1)Contextをつくる
+
+```javascript:src/contexts/AppContext.js
+
+import { createContext } from 'react'
+
+const AppContext = createContext()
+
+export default AppContext
+
+```
+
+### (2)ContextをProvideで渡す
+Context Providerで囲んだ子要素はuseContextで受け取って使用する事ができるようになる
+- AppContextをimportする
+- AppContext.Providerで囲む
+
+```javascript:src/components/TodoApp
+
+import React, { useReducer } from 'react';
+import styled from 'styled-components'
+import reducer from '../reducers'
+import TodoList from './TodoList'
+//AppContextをimportする
+import AppContext from '../contexts/AppContext'
+
+import TodoForm from "./TodoForm"
+
+const TodoApp = () => {
+  const [state, dispatch] = useReducer(reducer, [])
+
+  return (
+    //valueにstateとdispatchを渡す
+    <AppContext.Provider value={{ state, dispatch }}>
+      <StyledDiv>
+        <TodoForm />
+        <TodoList />
+      </StyledDiv>
+    </AppContext.Provider>
+  )
+}
+
+export default TodoApp;
+
+```
+
+### (3)子要素でContextを受け取る
+今までprops経由でわたしていたものがuseContextでアクセスできるようになり
+Propsで渡さなくて良くなった
+
+```javascript:src/components/TodoForm
+
+//useContextをimportする
+import React, { useState, useContext } from "react"
+//contextをimportする
+import AppContext from '../contexts/AppContext'
+
+const TodoForm = () => {
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
+  //useContextでstateとdispatchを受け取れる
+  const { state, dispatch } = useContext(AppContext)
+  // ...
+  // 略
+  // ...
+
+```
