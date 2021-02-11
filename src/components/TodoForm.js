@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { CREATE_EVENT, ALL_DELETE_EVENT } from '../actions'
 import styled from 'styled-components'
 
 const TodoForm = ({ todoLength, dispatch }) => {
@@ -7,7 +8,7 @@ const TodoForm = ({ todoLength, dispatch }) => {
 
   const todoAdd = e => {
     e.preventDefault()
-    dispatch({ type: 'CREATE_EVENT', payload: { title, body } })
+    dispatch({ type: CREATE_EVENT, payload: { title, body } })
     setTitle("")
     setBody("")
   }
@@ -15,7 +16,7 @@ const TodoForm = ({ todoLength, dispatch }) => {
   const todoAllDelete = e => {
     e.preventDefault()
     const result = window.confirm("全てのデータを削除してもよろしいですか？")
-    if (result) dispatch({ type: 'ALL_DELETE_EVENT' })
+    if (result) dispatch({ type: ALL_DELETE_EVENT })
   }
 
   return (

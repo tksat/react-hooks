@@ -1,11 +1,12 @@
 import React from "react"
+import { DELETE_EVENT } from '../actions'
 
 const Events = ({ events, dispatch }) => {
 
   return events.map(event => {
     const todoDelete = () => {
       const result = window.confirm("データを削除してもよろしいですか？")
-      if (result) dispatch({ type: 'DELETE_EVENT', payload: { id: event.id } })
+      if (result) dispatch({ type: DELETE_EVENT, payload: { id: event.id } })
     }
 
     return (

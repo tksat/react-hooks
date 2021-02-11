@@ -81,3 +81,64 @@ const TodoApp = () => {
 export default TodoApp;
 
 ```
+
+### actiontypeは定数で管理する
+タイプミスの時にエラーで表示されるように定数にするのが基本
+
+```javascript:src/actions/index.js
+
+export const CREATE_EVENT = 'CREATE_EVENT'
+export const DELETE_EVENT = 'DELETE_EVENT'
+export const ALL_DELETE_EVENT = 'ALL_DELETE_EVENT'
+
+```
+
+```javascript:src/reducers/index.js
+
+import { CREATE_EVENT, DELETE_EVENT, ALL_DELETE_EVENT } from '../actions'
+
+const events = (state = [], action) => {
+  switch (action.type) {
+    case CREATE_EVENT:
+      const id = state.length === 0 ? 1 : state[state.length - 1].id + 1
+      const data = { title: action.payload.title, body: action.payload.body }
+      return [...state, { id, ...data }];
+    case DELETE_EVENT:
+      const deleteddData = state.filter(event => event.id !== action.payload.id)
+      return [...deleteddData];
+    case ALL_DELETE_EVENT:
+      return [];
+    default:
+      return state
+  }
+}
+
+export default events
+
+```
+
+コンポーネントのtypeにも使用する
+
+```javascript:src/components/TodoForm
+
+import React, { useState } from "react"
+import { CREATE_EVENT, ALL_DELETE_EVENT } from '../actions'
+import styled from 'styled-components'
+
+const TodoForm = ({ todoLength, dispatch }) => {
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
+
+  const todoAdd = e => {
+    e.preventDefault()
+    dispatch({ type: CREATE_EVENT, payload: { title, body } })
+    setTitle("")
+    setBody("")
+  }
+
+  const todoAllDelete = e => {
+    e.preventDefault()
+    const result = window.confirm("全てのデータを削除してもよろしいですか？")
+    if (result) dispatch({ type: ALL_DELETE_EVENT })
+  }
+```
