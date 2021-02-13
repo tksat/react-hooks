@@ -162,7 +162,7 @@ export default AppContext
 ### (2)ContextをProvideで渡す
 Context Providerで囲んだ子要素はuseContextで受け取って使用する事ができるようになる
 - AppContextをimportする
-- AppContext.Providerで囲む
+- AppContext.Providerで囲みvalueに子配下で使用したいデータを渡す（state/dispatch）
 
 ```javascript:src/components/TodoApp
 
@@ -194,8 +194,8 @@ export default TodoApp;
 ```
 
 ### (3)子要素でContextを受け取る
-今までprops経由でわたしていたものがuseContextでアクセスできるようになり
-Propsで渡さなくて良くなった
+今までprops経由でわたしていたものがuseContextでアクセスできるようになりPropsで渡さなくて良くなった
+- 親要素のvalueで渡しているものがuseContextで受け取れる
 
 ```javascript:src/components/TodoForm
 
@@ -212,5 +212,49 @@ const TodoForm = () => {
   // ...
   // 略
   // ...
+
+```
+
+
+## reduxを導入
+
+大規模になってくると状態の管理もより複雑になってきます
+それを解消するためにreduxで管理しやすくします
+
+### (1)reduxをインストール
+```
+npm install redux
+```
+
+### (2)root-reducerを作成する
+stateはarrayとなるので、初期化時やstateを受け取り時は注意する
+
+```javascript: reducers/index.js
+import { combineReducers } from "redux"
+import events from "./events"
+
+export default combineReducers({ events })
+```
+
+```javascript: reducers/events.js
+import { CREATE_EVENT, DELETE_EVENT, ALL_DELETE_EVENT } from '../actions'
+
+const events = (state = [], action) => {
+  switch (action.type) {
+    case CREATE_EVENT:
+      const id = state.length === 0 ? 1 : state[state.length - 1].id + 1
+      const data = { title: action.payload.title, body: action.payload.body }
+      return [...state, { id, ...data }];
+    case DELETE_EVENT:
+      const deleteddData = state.filter(event => event.id !== action.payload.id)
+      return [...deleteddData];
+    case ALL_DELETE_EVENT:
+      return [];
+    default:
+      return state
+  }
+}
+
+export default events
 
 ```

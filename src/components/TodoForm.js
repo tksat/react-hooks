@@ -34,7 +34,7 @@ const TodoForm = () => {
           <StyledTextArea id="body" value={body} onChange={e => setBody(e.target.value)} />
         </div>
         <StyledButton value="イベントを作成" onClick={todoAdd} disabled={title === '' || body === ''} />
-        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} disabled={state.length === 0} />
+        <StyledButton value="すべてのイベントを削除" delete onClick={todoAllDelete} disabled={state.events.length === 0} />
       </form>
     </>
   )

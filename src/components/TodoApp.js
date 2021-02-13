@@ -7,7 +7,7 @@ import AppContext from '../contexts/AppContext'
 import TodoForm from "./TodoForm"
 
 const TodoApp = () => {
-  const [state, dispatch] = useReducer(reducer, [])
+  const [state, dispatch] = useReducer(reducer, { events: [] })
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

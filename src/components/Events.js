@@ -5,7 +5,7 @@ import AppContext from "../contexts/AppContext"
 const Events = () => {
   const { state, dispatch } = useContext(AppContext)
 
-  return state.map(event => {
+  return state.events.map(event => {
     const todoDelete = () => {
       const result = window.confirm("データを削除してもよろしいですか？")
       if (result) dispatch({ type: DELETE_EVENT, payload: { id: event.id } })
